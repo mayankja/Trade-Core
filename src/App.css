@@ -1,0 +1,30 @@
+.cursor-pointer {
+    cursor: pointer;
+}
+
+.active, .genres:hover {
+    background-color: rgba(0, 0, 0, 0.38) !important;
+    color: #fff !important;
+}
+
+.MuiFormControl-root {
+    width: 100%;
+}
+
+.MuiOutlinedInput-root {
+    width: 100%;
+    height: 40px;
+    color: rgba(0, 0, 0, 0.23) !important;
+}
+
+.text-color, .MuiCheckbox-root, .fields, .MuiSelect-outlined.MuiSelect-outlined {
+    color: rgba(0, 0, 0, 0.23) !important;
+}
+
+.noOfPages {
+    width: 40% !important;
+}
+
+span{
+    font-size: 15px;
+}
