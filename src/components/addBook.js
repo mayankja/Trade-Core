@@ -52,7 +52,7 @@ export default function AddBook () {
 	const [subGenreName, setSubGenreName]= React.useState('');
 	const [getTradeSteps, setGetTradeSteps]= React.useState([]);
 	const [formSubmitted, setFormSubmitted]= React.useState(false);
-  
+  const [addNewSubgenre, setAddNewSubgenre]= React.useState('');
   const [title, setTitle]= React.useState('');
 	const [author, setAuthor]= React.useState('Author');
 	const [isbn, setIsbn]= React.useState('');
@@ -108,6 +108,7 @@ export default function AddBook () {
   }
 
 	const genreClicked = (getGenre, addNewSubGenre, step) => {
+    setAddNewSubgenre(addNewSubGenre);
     if(step === 0) {
       setSubGenre(getGenre);
     } else if (step === 1) {
@@ -140,13 +141,13 @@ export default function AddBook () {
 		if(actualValue) {
 			return <Grid container spacing={3}>
 				{actualValue.map((value, index) =>
-          <Grid className='cursor-pointer' key={index} item xs={6} sm={3} onClick={() => genreClicked(value, false, getStep)}>
-            <Paper className={`${classes.paper} genres`}>{value.name}</Paper>
+          <Grid className={`cursor-pointer`} key={index} item xs={6} sm={3} onClick={() => genreClicked(value, false, getStep)}>
+            <Paper className={`${classes.paper} genres ${(value.id === subGenre.id) ? 'active' : '' }`}>{value.name}</Paper>
           </Grid>
 				)}
 				{getStep === 1 && 
 					<Grid className='cursor-pointer' key='step_4' item xs={6} sm={3} onClick={() => genreClicked(null, true, getStep)}>
-						<Paper className={`${classes.paper} genres`}>Add new</Paper>
+						<Paper className={`${classes.paper} genres ${((getStep === 1) && addNewSubgenre) ? 'active' : '' }`}>Add new</Paper>
 					</Grid>
 				}
 			</Grid>
@@ -211,6 +212,7 @@ export default function AddBook () {
             variant="outlined"
             placeholder="Book title"
             value={title}
+            required
             onInput={ e => setTitle(e.target.value)}
           />
         </div>
@@ -322,12 +324,13 @@ export default function AddBook () {
             <div><span>Edition</span></div>
             <div>
               <TextField
-              id="outlined-basic"
-              variant="outlined"
-              placeholder="Edition"
-              value={edition}
-              onInput={ e => setEdition(e.target.value)}
-            /></div>
+                id="outlined-basic"
+                variant="outlined"
+                placeholder="Edition"
+                value={edition}
+                onInput={ e => setEdition(e.target.value)}
+              />
+            </div>
           </div>
           <div className='d-block w-50'>
             <div><span id="demo-simple-select-outlined-label">Edition Language</span></div>
@@ -362,6 +365,7 @@ export default function AddBook () {
             variant="outlined"
             placeholder="Description"
             value={inputDescription}
+            onInput={ e => setInputDescription(e.target.value)}
             multiline
             rows={2}
             rowsMax={4}
@@ -509,7 +513,7 @@ export default function AddBook () {
                   }
                   {((getTradeSteps.length === 3 && activeStep === 2) || (getTradeSteps.length === 4 && activeStep === 3)) &&
                     <Button
-                      disabled={!subGenre.subgenres}
+                      disabled={!title}
                       type="submit"
                       variant="contained"
                       color="primary"
